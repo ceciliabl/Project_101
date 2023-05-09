@@ -5,16 +5,23 @@ import copy
 
 
 class Card(object):
+    """A card is defined by a color and a value"""
+
     def __init__(self,color,value):
+        """Constructor of the class Card"""
         self.value = value
         self.color = color
 
     def __str__(self):
+        """Return a string representation of the card."""
         return f"{self.value} {self.color}"
 
 
 class Deck(object):
+    """A deck is defined by a list of cards"""
+
     def __init__(self):
+        """Constructor of the class Deck"""
         self.values = (1,2,3,4,5,6,7,8,9,10,11,12,13)
         self.colors = ("carreaux","pique","coeur","trèfle")
         self._deck = []
@@ -24,22 +31,32 @@ class Deck(object):
                 self._deck.append(card)
 
     def shuffle(self):
+        """Shuffle the deck of cards"""
         random.shuffle(self._deck)
 
     def size(self):
+        """Return the curent size of the deck"""
         return len(self._deck)
 
     def pop(self):
+        """Return the last card of the deck and remove it from the deck"""
         return self._deck.pop()
 
     def get(self, index):
+        """Return the card at the given index"""
         if index < 0 or index > len(self._deck):
             raise Exception("Index out of range")
         return self._deck[index]
 
 
 class PlayedCard(object):
-    def __init__(self, card, player):
+    """A played card is defined by a card and a player.
+    It is used to compare cards between players during a game.
+    Ex: played_card1 = PlayedCard(card1, 1)
+    """
+
+    def __init__(self, card: Card, player):
+        """Constructor of the class PlayedCard"""
         self.card = card
         self.player = player
 
@@ -61,6 +78,17 @@ class Hand(object):
 
 
 class Bataille(object):
+    """A game of Bataille is defined by a deck of cards and two players.
+    Game follow the following rules:
+    - The deck is shuffled and distributed between the two players
+    - Each player plays the first card of his deck
+    - The player with the highest card wins and takes the two cards
+    - If both cards are equal, a "bataille" is declared
+    - Each player plays the first card of his deck
+    - The player with the highest card wins and takes all the cards
+    - Or a new "bataille" is declared... etc
+    """
+
     def __init__ (self):
         self.hands = [Hand(1), Hand(2)]
         self.deck= Deck()
