@@ -105,21 +105,19 @@ class Bataille(object):
         self.deck= Deck()
 
     def distribute(self):
+        """Shuffle the deck and distribute the cards between the two players.
+        Return the hands of the two players to match current compare method.
+        """
+
         self.deck.shuffle()
 
         index = 0
         while (len(self.deck._deck)):
-            _player = index % len(self.hands)
-            self.hands[_player].add(self.deck.pop())
-            index += 1
+            for _player in self.players:
+                _player.add(self.deck.pop())
+                index += 1
 
-        # just go 2 by 2
-        # for card in self.deck._deck:
-        #     _list = list1 if index % 2 == 0 else list2
-        #     _list.append(card)
-        #     index += 1
-
-        return self.hands
+        return self.players[0].hand, self.players[1].hand
 
     # blong: does not work. Because card1 and card2 are now PlayedCard.
     # def compare(played_card1, played_card2)
@@ -152,54 +150,29 @@ class Bataille(object):
             else:
                 return list1, list2, l
 
-    def play(self):
-        hand1, hand2 = b.distribute()
-        print(hand1.size())
-        assert hand1.size() == hand2.size()
 
-        l=[]
-        # hand1.empty()
+if __name__ == "__main__":
+    deck = Deck()
+    deck.shuffle()
 
-        while(hand2.size() != 0 and hand1.size() !=0 ):
-            # played_card = hand1.play()
-            card1 = hand1.pop(0)
-            card2 = hand2.pop(0)
-            print()
-            print(card1, card2)
-            l = l + [card1, card2]
-            print ("nombre de cartes a gagner ", len(l))
-            hand1, hand2, l = b.compare(hand1, hand2, card1, card2, l)
-            print(f"Deck 1: {hand1.size()} vs Deck 2: {hand2.size()}")
+    b = Bataille()
+    list1, list2 = b.distribute()
+    print(len(list1))
+    assert len(list1) == len(list2)
 
-        if(hand1.size() == 0):
-            print ("winner is player 2")
-        else:
-            print ("winner is player 1")
+    l=[]
 
-deck = Deck()
-deck.shuffle()
+    while(len (list2)!=0 and len(list1) !=0 ):
+        card1 = list1.pop(0)
+        card2 = list2.pop(0)
+        print()
+        print(card1, card2)
+        l = l + [card1, card2]
+        print ("nombre de cartes a gagner ", len(l))
+        list1, list2, l = b.compare(list1, list2, card1, card2, l)
+        print(f"Deck 1: {len(list1)} vs Deck 2: {len(list2)}")
 
-b = Bataille()
-
-b.play()
-
-list1, list2 = b.distribute()
-print(len(list1))
-assert len(list1) == len(list2)
-
-l=[]
-
-while(len (list2)!=0 and len(list1) !=0 ):
-    card1 = list1.pop(0)
-    card2 = list2.pop(0)
-    print()
-    print(card1, card2)
-    l = l + [card1, card2]
-    print ("nombre de cartes a gagner ", len(l))
-    list1, list2, l = b.compare(list1, list2, card1, card2, l)
-    print(f"Deck 1: {len(list1)} vs Deck 2: {len(list2)}")
-
-if(len(list1)==0):
-    print ("winner is player 2")
-else:
-    print ("winner is player 1")
+    if(len(list1)==0):
+        print ("winner is player 2")
+    else:
+        print ("winner is player 1")
