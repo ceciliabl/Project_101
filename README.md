@@ -22,7 +22,9 @@ pip install -r requirements.txt # Install the project dependencies
 ## Usage
 
 ```bash
-python src/card_games/battle.py # Run the card_game app
+# Run the card_game app with module mode to load the battle modules
+# dependencies
+python -m src.card_games.battle
 ```
 
 ## Testing
