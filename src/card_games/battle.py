@@ -61,20 +61,30 @@ class PlayedCard(object):
         self.player = player
 
 
-class Hand(object):
-    def __init__ (self, player: int):
-        self.player = player
-        self.list = []
+class Player(object):
+    """A player is defined by a PrimaryKey (pk), a name and a list of cards"""
+
+    def __init__ (self, pk: int, name: str):
+        """Constructor of the class Player"""
+        self.pk = pk
+        self.name = name
+        self.hand = []
 
     def add(self, card: Card):
-        self.list.append(card)
+        """Add a card to the player's hand"""
+        self.hand.append(card)
 
     def pop(self, index: int):
-        _card = self.list.pop(index)
-        return PlayedCard(_card, self.player)
+        """Remove a card from the player's hand and return it
+        :param index: index of the card to remove
+        :return: the removed card
+        :return_type: PlayedCard
+        """
+        _card = self.hand.pop(index)
+        return PlayedCard(_card, self)
 
     def size(self):
-        return len(self.list)
+        return len(self.hand)
 
 
 class Bataille(object):
@@ -90,7 +100,8 @@ class Bataille(object):
     """
 
     def __init__ (self):
-        self.hands = [Hand(1), Hand(2)]
+        """Constructor of the class Bataille"""
+        self.players = [Player(1, "Cecilia"), Player(2, "Jiben2")]
         self.deck= Deck()
 
     def distribute(self):
