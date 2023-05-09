@@ -22,7 +22,7 @@ pip install -r requirements.txt # Install the project dependencies
 ## Usage
 
 ```bash
-python -m card_game # Run the card_game app
+python src/card_games/battle.py # Run the card_game app
 ```
 
 ## Testing
