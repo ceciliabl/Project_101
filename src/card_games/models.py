@@ -24,6 +24,9 @@ class Deck(object):
         """Constructor of the class Deck"""
         self.cards = []
 
+    def display_current_state(self):
+        print(f"Deck #cards: {len(self.cards)}")
+
     def add_cards(self, values: list or tuple, color: str):
         """Add values cards with the given color.
         :param: values (list, tuples)
@@ -75,9 +78,13 @@ class Player(object):
         self.pk = pk
         self.name = name
         self.hand = []
+        self.folds = []
 
     def __str__(self):
         return f"{self.pk} {self.name}"
+
+    def display_current_state(self):
+        print(f"{self.__str__()}: #cards: {len(self.hand)} #folds: {len(self.folds)}")
 
     def add(self, card: Card):
         """Add a card to the player's hand"""

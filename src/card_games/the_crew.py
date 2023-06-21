@@ -20,20 +20,51 @@ class TheCrew(object):
 
         self.players = players
         self.deck = decks.get_the_crew_deck()
+        self.captain = None
+        self.communications = []
+        self.missions = []
 
-    def distribute_deck(self):
+    def distribute_deck(self, shuffle=False):
         """Distribute all deck cards. When playing with 3 players
         Distribution is odd. First player has +1 card.
         """
+        if shuffle:
+            self.deck.shuffle()
+
         while self.deck.size() > 0:
             for _player in self.players:
                 if self.deck.is_empty():
                     continue
 
                 card = self.deck.pop()
+                # blong: Find a better synthax to find a given card.
+                # here we want to know if the card is the 4 black => captain.
+                if card.value == 4 and card.color == "black":
+                    self.captain = _player
                 _player.add(card)
+
+    def display_current_state(self):
+        print("*****************************")
+        print("The Crew: Current State")
+        print(f"Captain: {self.captain}")
+        # self.deck.display_current_state()
+        if self.missions:
+            print(f"Missions:")
+            for mission in self.missions:
+                print(f"{mission}")
+        else:
+            print("No Missions - Enjoy the sea <3")
+        print(f"Players:")
+        for player in self.players:
+            player.display_current_state()
+        print("*****************************")
 
 
 if __name__ == "__main__":
     the_crew = TheCrew()
-    the_crew.distribute_deck()
+    the_crew.distribute_deck(shuffle=True)
+    the_crew.display_current_state()
+
+    # result = input("Display Current State? (y,n)")
+    # if result:
+    #     the_crew.display_current_state()

@@ -20,3 +20,5 @@ def test_the_crew_distribute(the_crew):
 
     for _player in the_crew.players:
         assert len(_player.hand) != 0
+
+    the_crew.display_current_state()
