@@ -20,7 +20,8 @@ def syracuse(n):
             result = 3*n+1
         suite.append(result)
         n=result
-    return(suite)
+    return suite
+
 
 def decroissant(n):
     if n==0 :

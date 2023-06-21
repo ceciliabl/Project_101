@@ -1,5 +1,5 @@
 import pytest
-from .syracuse import syracuse
+from ..syracuse import syracuse
 
 def test_syracuse():
     suite=syracuse(14)

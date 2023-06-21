@@ -1,86 +1,44 @@
-import random
-import copy
+from src.card_games import decks, utils
 
-#from .models import Card, Deck
-
-
-class Card(object):
-    def __init__(self,color,value):
-        self.value = value
-        self.color = color
-
-    def __str__(self):
-        return f"{self.value} {self.color}"
-
-
-class Deck(object):
-    def __init__(self):
-        self.values = (1,2,3,4,5,6,7,8,9,10,11,12,13)
-        self.colors = ("carreaux","pique","coeur","trèfle")
-        self._deck = []
-        for color in self.colors:
-            for value in self.values:
-                card = Card(color,value)
-                self._deck.append(card)
-
-    def shuffle(self):
-        random.shuffle(self._deck)
-
-    def size(self):
-        return len(self._deck)
-
-    def pop(self):
-        return self._deck.pop()
-
-    def get(self, index):
-        if index < 0 or index > len(self._deck):
-            raise Exception("Index out of range")
-        return self._deck[index]
-
-
-class PlayedCard(object):
-    def __init__(self, card, player):
-        self.card = card
-        self.player = player
-
-
-class Hand(object):
-    def __init__ (self, player: int):
-        self.player = player
-        self.list = []
-
-    def add(self, card: Card):
-        self.list.append(card)
-
-    def pop(self, index: int):
-        _card = self.list.pop(index)
-        return PlayedCard(_card, self.player)
-
-    def size(self):
-        return len(self.list)
+"""
+Currently this file is the entry point to play a game of Bataille.
+Just call python src/card_games/battle.py to play a game on your terminal.
+"""
 
 
 class Bataille(object):
-    def __init__ (self):
-        self.hands = [Hand(1), Hand(2)]
-        self.deck= Deck()
+    """A game of Bataille is defined by a deck of cards and two players.
+    Game follow the following rules:
+    - The deck is shuffled and distributed between the two players
+    - Each player plays the first card of his deck
+    - The player with the highest card wins and takes the two cards
+    - If both cards are equal, a "bataille" is declared
+    - Each player plays the first card of his deck
+    - The player with the highest card wins and takes all the cards
+    - Or a new "bataille" is declared... etc
+    """
+
+    def __init__ (self, players=None):
+        """Constructor of the class Bataille"""
+        if players is None:
+            players = utils.get_anonymous_players(2)
+
+        self.players = players
+        self.deck = decks.get_regular_52_cards_deck()
 
     def distribute(self):
+        """Shuffle the deck and distribute the cards between the two players.
+        Return the hands of the two players to match current compare method.
+        """
         self.deck.shuffle()
 
         index = 0
-        while (len(self.deck._deck)):
-            _player = index % len(self.hands)
-            self.hands[_player].add(self.deck.pop())
-            index += 1
+        while (self.deck.size() > 0):
+            for _player in self.players:
+                _player.add(self.deck.pop())
+                index += 1
 
-        # just go 2 by 2
-        # for card in self.deck._deck:
-        #     _list = list1 if index % 2 == 0 else list2
-        #     _list.append(card)
-        #     index += 1
-
-        return self.hands
+        return self.players[0].hand, self.players[1].hand
 
     # blong: does not work. Because card1 and card2 are now PlayedCard.
     # def compare(played_card1, played_card2)
@@ -113,54 +71,26 @@ class Bataille(object):
             else:
                 return list1, list2, l
 
-    def play(self):
-        hand1, hand2 = b.distribute()
-        print(hand1.size())
-        assert hand1.size() == hand2.size()
 
-        l=[]
-        # hand1.empty()
+if __name__ == "__main__":
+    b = Bataille()
+    list1, list2 = b.distribute()
+    print(len(list1))
+    assert len(list1) == len(list2)
 
-        while(hand2.size() != 0 and hand1.size() !=0 ):
-            # played_card = hand1.play()
-            card1 = hand1.pop(0)
-            card2 = hand2.pop(0)
-            print()
-            print(card1, card2)
-            l = l + [card1, card2]
-            print ("nombre de cartes a gagner ", len(l))
-            hand1, hand2, l = b.compare(hand1, hand2, card1, card2, l)
-            print(f"Deck 1: {hand1.size()} vs Deck 2: {hand2.size()}")
+    l=[]
 
-        if(hand1.size() == 0):
-            print ("winner is player 2")
-        else:
-            print ("winner is player 1")
+    while(len (list2)!=0 and len(list1) !=0 ):
+        card1 = list1.pop(0)
+        card2 = list2.pop(0)
+        print()
+        print(card1, card2)
+        l = l + [card1, card2]
+        print ("nombre de cartes a gagner ", len(l))
+        list1, list2, l = b.compare(list1, list2, card1, card2, l)
+        print(f"Deck 1: {len(list1)} vs Deck 2: {len(list2)}")
 
-deck = Deck()
-deck.shuffle()
-
-b = Bataille()
-
-b.play()
-
-list1, list2 = b.distribute()
-print(len(list1))
-assert len(list1) == len(list2)
-
-l=[]
-
-while(len (list2)!=0 and len(list1) !=0 ):
-    card1 = list1.pop(0)
-    card2 = list2.pop(0)
-    print()
-    print(card1, card2)
-    l = l + [card1, card2]
-    print ("nombre de cartes a gagner ", len(l))
-    list1, list2, l = b.compare(list1, list2, card1, card2, l)
-    print(f"Deck 1: {len(list1)} vs Deck 2: {len(list2)}")
-
-if(len(list1)==0):
-    print ("winner is player 2")
-else:
-    print ("winner is player 1")
+    if(len(list1)==0):
+        print ("winner is player 2")
+    else:
+        print ("winner is player 1")
