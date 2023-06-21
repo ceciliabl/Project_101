@@ -1,81 +1,9 @@
-import random
-
-from src.card_games.models import Card
+from src.card_games import decks, utils
 
 """
 Currently this file is the entry point to play a game of Bataille.
 Just call python src/card_games/battle.py to play a game on your terminal.
 """
-
-
-class Deck(object):
-    """A deck is defined by a list of cards"""
-
-    def __init__(self):
-        """Constructor of the class Deck"""
-        self.values = (1,2,3,4,5,6,7,8,9,10,11,12,13)
-        self.colors = ("carreaux","pique","coeur","trèfle")
-        self._deck = []
-        for color in self.colors:
-            for value in self.values:
-                card = Card(color,value)
-                self._deck.append(card)
-
-    def shuffle(self):
-        """Shuffle the deck of cards"""
-        random.shuffle(self._deck)
-
-    def size(self):
-        """Return the curent size of the deck"""
-        return len(self._deck)
-
-    def pop(self):
-        """Return the last card of the deck and remove it from the deck"""
-        return self._deck.pop()
-
-    def get(self, index):
-        """Return the card at the given index"""
-        if index < 0 or index > len(self._deck):
-            raise Exception("Index out of range")
-        return self._deck[index]
-
-
-class PlayedCard(object):
-    """A played card is defined by a card and a player.
-    It is used to compare cards between players during a game.
-    Ex: played_card1 = PlayedCard(card1, 1)
-    """
-
-    def __init__(self, card: Card, player):
-        """Constructor of the class PlayedCard"""
-        self.card = card
-        self.player = player
-
-
-class Player(object):
-    """A player is defined by a PrimaryKey (pk), a name and a list of cards"""
-
-    def __init__ (self, pk: int, name: str):
-        """Constructor of the class Player"""
-        self.pk = pk
-        self.name = name
-        self.hand = []
-
-    def add(self, card: Card):
-        """Add a card to the player's hand"""
-        self.hand.append(card)
-
-    def pop(self, index: int):
-        """Remove a card from the player's hand and return it
-        :param index: index of the card to remove
-        :return: the removed card
-        :return_type: PlayedCard
-        """
-        _card = self.hand.pop(index)
-        return PlayedCard(_card, self)
-
-    def size(self):
-        return len(self.hand)
 
 
 class Bataille(object):
@@ -90,20 +18,22 @@ class Bataille(object):
     - Or a new "bataille" is declared... etc
     """
 
-    def __init__ (self):
+    def __init__ (self, players=None):
         """Constructor of the class Bataille"""
-        self.players = [Player(1, "Cecilia"), Player(2, "Jiben2")]
-        self.deck= Deck()
+        if players is None:
+            players = utils.get_anonymous_players(2)
+
+        self.players = players
+        self.deck = decks.get_regular_52_cards_deck()
 
     def distribute(self):
         """Shuffle the deck and distribute the cards between the two players.
         Return the hands of the two players to match current compare method.
         """
-
         self.deck.shuffle()
 
         index = 0
-        while (len(self.deck._deck)):
+        while (self.deck.size() > 0):
             for _player in self.players:
                 _player.add(self.deck.pop())
                 index += 1
@@ -143,9 +73,6 @@ class Bataille(object):
 
 
 if __name__ == "__main__":
-    deck = Deck()
-    deck.shuffle()
-
     b = Bataille()
     list1, list2 = b.distribute()
     print(len(list1))
