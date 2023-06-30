@@ -38,7 +38,7 @@ class Bataille(object):
                 _player.add(self.deck.pop())
                 index += 1
 
-        return self.players[0].hand, self.players[1].hand
+        return self.players[0].cards, self.players[1].cards
 
     # blong: does not work. Because card1 and card2 are now PlayedCard.
     # def compare(played_card1, played_card2)

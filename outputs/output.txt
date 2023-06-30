@@ -1,0 +1,187 @@
+/Users/jiben2/Swork/TheSofa/Project_101/venv/bin/python /Applications/PyCharm.app/Contents/plugins/python/helpers/pydev/pydevd.py --multiprocess --qt-support=auto --client 127.0.0.1 --port 53616 --file /Users/jiben2/Swork/TheSofa/Project_101/src/card_games/the_crew.py
+Connected to pydev debugger (build 223.8617.48)
+*********************************
+*********************************
+****** Welcome to The Crew ******
+******
+****** Current Level 5
+****** 3 Players:
+0 Mercedes Hernandez: #cards: 14 #folds: 0
+1 Jacob Charles: #cards: 13 #folds: 0
+2 James Green: #cards: 13 #folds: 0
+****** Captain: 1 Jacob Charles
+
+*********************************
+****** Asking Player: 1 Jacob Charles to select a mission...
+1 Jacob Charles: #cards: 13 #folds: 0
+_______
+blue: 2 4 7 8 9
+_______
+pink: 4 8
+_______
+yellow: 1 8
+_______
+green: 1 6 7
+_______
+black: 4
+
+*********************************
+****** Missions:
+[0] Mission: Win 1 blue: #player: None
+[1] Mission: Win 7 yellow: #player: None
+[2] Mission: Win 3 green: #player: None
+[3] Mission: Win 6 yellow: #player: None
+[4] Mission: Win 6 pink: #player: None
+
+Oy ! Take a mission...
+ Use number inside [.] to give your choice ?!
+4
+
+******* Mission: Win 6 pink Selected
+*********************************
+
+
+*********************************
+****** Asking Player: 2 James Green to select a mission...
+2 James Green: #cards: 13 #folds: 0
+_______
+blue: 3 6
+_______
+pink: 1 6 7
+_______
+yellow: 6 7
+_______
+green: 2 3 4
+_______
+black: 1 2 3
+
+*********************************
+****** Missions:
+[0] Mission: Win 1 blue: #player: None
+[1] Mission: Win 7 yellow: #player: None
+[2] Mission: Win 3 green: #player: None
+[3] Mission: Win 6 yellow: #player: None
+[4] Mission: Win 6 pink: #player: 1 Jacob Charles
+
+Oy ! Take a mission...
+ Use number inside [.] to give your choice ?!
+4
+Mission already taken
+
+Oy ! Take a mission...
+ Use number inside [.] to give your choice ?!
+0
+
+******* Mission: Win 1 blue Selected
+*********************************
+
+*********************************
+
+
+*********************************
+****** Asking Player: 0 Mercedes Hernandez to select a mission...
+0 Mercedes Hernandez: #cards: 14 #folds: 0
+_______
+blue: 1 5
+_______
+pink: 2 3 5 9
+_______
+yellow: 2 3 4 5 9
+_______
+green: 5 8 9
+_______
+black:
+
+*********************************
+****** Missions:
+[0] Mission: Win 1 blue: #player: 2 James Green
+[1] Mission: Win 7 yellow: #player: None
+[2] Mission: Win 3 green: #player: None
+[3] Mission: Win 6 yellow: #player: None
+[4] Mission: Win 6 pink: #player: 1 Jacob Charles
+
+Oy ! Take a mission...
+ Use number inside [.] to give your choice ?!
+1
+
+******* Mission: Win 7 yellow Selected
+*********************************
+
+
+*********************************
+****** Asking Player: 1 Jacob Charles to select a mission...
+1 Jacob Charles: #cards: 13 #folds: 0
+_______
+blue: 2 4 7 8 9
+_______
+pink: 4 8
+_______
+yellow: 1 8
+_______
+green: 1 6 7
+_______
+black: 4
+
+*********************************
+****** Missions:
+[0] Mission: Win 1 blue: #player: 2 James Green
+[1] Mission: Win 7 yellow: #player: 0 Mercedes Hernandez
+[2] Mission: Win 3 green: #player: None
+[3] Mission: Win 6 yellow: #player: None
+[4] Mission: Win 6 pink: #player: 1 Jacob Charles
+
+Oy ! Take a mission...
+ Use number inside [.] to give your choice ?!
+3
+
+******* Mission: Win 6 yellow Selected
+*********************************
+
+
+*********************************
+****** Asking Player: 2 James Green to select a mission...
+2 James Green: #cards: 13 #folds: 0
+_______
+blue: 3 6
+_______
+pink: 1 6 7
+_______
+yellow: 6 7
+_______
+green: 2 3 4
+_______
+black: 1 2 3
+
+*********************************
+****** Missions:
+[0] Mission: Win 1 blue: #player: 2 James Green
+[1] Mission: Win 7 yellow: #player: 0 Mercedes Hernandez
+[2] Mission: Win 3 green: #player: None
+[3] Mission: Win 6 yellow: #player: 1 Jacob Charles
+[4] Mission: Win 6 pink: #player: 1 Jacob Charles
+
+Oy ! Take a mission...
+ Use number inside [.] to give your choice ?!
+2
+
+******* Mission: Win 3 green Selected
+*********************************
+
+*****************************
+The Crew: Current State #Level 5
+****** 3 Players:
+0 Mercedes Hernandez: #cards: 14 #folds: 0
+1 Jacob Charles: #cards: 13 #folds: 0
+2 James Green: #cards: 13 #folds: 0
+****** Captain: 1 Jacob Charles
+
+*********************************
+****** Missions:
+[0] Mission: Win 1 blue: #player: 2 James Green
+[1] Mission: Win 7 yellow: #player: 0 Mercedes Hernandez
+[2] Mission: Win 3 green: #player: 2 James Green
+[3] Mission: Win 6 yellow: #player: 1 Jacob Charles
+[4] Mission: Win 6 pink: #player: 1 Jacob Charles
+*****************************
+
+Process finished with exit code 0

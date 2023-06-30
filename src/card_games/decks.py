@@ -1,16 +1,27 @@
-from src.card_games.models import Deck
+import random
 
-# Various Constant. Don't know where to put them.
-SPADE = "spade"
-HEART = "heart"
-TRUMP = "trump"
-DIAMOND = "diamond"
+from src.card_games.models import Deck, Card, CardMission
+from src.card_games.constants import (
+    SPADE, HEART, DIAMOND, TRUMP,
+    BLUE, BLACK, PINK, GREEN, YELLOW
+)
 
-BLUE = "blue"
-YELLOW = "yellow"
-GREEN = "green"
-PINK = "pink"
-BLACK = "black"
+
+# -----------------------------------------------------------------------------
+def generate_suit(color, values):
+    """Generate a colored suit of Card."""
+    suit = []
+    for value in values:
+        if isinstance(value, tuple):
+            _value = value[0]
+            _name = value[1]
+        else:
+            _value = value
+            _name = None
+
+        suit.append(Card(color, _value, _name))
+
+    return suit
 
 
 def get_regular_52_cards_deck(shuffled=False):
@@ -34,10 +45,10 @@ def get_regular_52_cards_deck(shuffled=False):
     )
 
     deck = Deck()
-    deck.add_cards(values=values, color=SPADE)
-    deck.add_cards(values=values, color=TRUMP)
-    deck.add_cards(values=values, color=HEART)
-    deck.add_cards(values=values, color=DIAMOND)
+    deck.add_cards(generate_suit(values=values, color=SPADE))
+    deck.add_cards(generate_suit(values=values, color=TRUMP))
+    deck.add_cards(generate_suit(values=values, color=HEART))
+    deck.add_cards(generate_suit(values=values, color=DIAMOND))
 
     if shuffled:
         deck.shuffle()
@@ -45,18 +56,51 @@ def get_regular_52_cards_deck(shuffled=False):
     return deck
 
 
+# -----------------------------------------------------------------------------
 def get_the_crew_deck(shuffled=False):
-    """Generic method to create the crew deck."""
+    """Generic method to create the crew cards deck."""
     deck = Deck()
     values = [(i, str(i)) for i in range(1, 10)]
     spade_values = [(i, str(i)) for i in range(1, 5)]
-    deck.add_cards(values=values, color=BLUE)
-    deck.add_cards(values=values, color=YELLOW)
-    deck.add_cards(values=values, color=PINK)
-    deck.add_cards(values=values, color=GREEN)
-    deck.add_cards(values=spade_values, color=BLACK)
+    deck.add_cards(generate_suit(color=BLUE, values=values))
+    deck.add_cards(generate_suit(color=YELLOW, values=values))
+    deck.add_cards(generate_suit(color=PINK, values=values))
+    deck.add_cards(generate_suit(color=GREEN, values=values))
+    deck.add_cards(generate_suit(color=BLACK, values=spade_values))
 
     if shuffled:
         deck.shuffle()
 
     return deck
+
+
+# -----------------------------------------------------------------------------
+def get_the_crew_mission_deck(shuffled=False):
+    """Generic method to create the crew missions deck."""
+    _card_missions = []
+
+    # blong: For each value form 1 to 10 exclusive, we create a CardMission
+    # with a single Card.
+    values = [(i, str(i)) for i in range(1, 10)]
+    for value in values:
+        _card_missions.append(CardMission(
+            cards=[Card(display_name=value[1], value=value[0], color=BLUE)],
+            level=1,
+        ))
+        _card_missions.append(CardMission(
+            cards=[Card(display_name=value[1], value=value[0], color=YELLOW)],
+            level=1,
+        ))
+        _card_missions.append(CardMission(
+            cards=[Card(display_name=value[1], value=value[0], color=GREEN)],
+            level=1,
+        ))
+        _card_missions.append(CardMission(
+            cards=[Card(display_name=value[1], value=value[0], color=PINK)],
+            level=1,
+        ))
+
+    if shuffled:
+        random.shuffle(_card_missions)
+
+    return _card_missions
